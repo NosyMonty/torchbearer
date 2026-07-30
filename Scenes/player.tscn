@@ -107,6 +107,26 @@ region = Rect2(50, 296, 50, 37)
 atlas = ExtResource("1_v0iea")
 region = Rect2(100, 296, 50, 37)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_11gg7"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(300, 333, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpa8y"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(0, 370, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbwqj"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(50, 370, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwi16"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(100, 370, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sweqm"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(150, 370, 50, 37)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_fs7ks"]
 atlas = ExtResource("1_v0iea")
 region = Rect2(100, 407, 50, 37)
@@ -250,6 +270,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_11gg7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qpa8y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sbwqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwi16")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sweqm")
+}],
+"loop": false,
+"name": &"drawsword",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fs7ks")
 }, {
 "duration": 1.0,
@@ -296,7 +336,7 @@ script = ExtResource("1_cvnsp")
 position = Vector2(-1.5, 3.25)
 scale = Vector2(1.06, 1.1756756)
 sprite_frames = SubResource("SpriteFrames_wpjfl")
-animation = &"attack3"
+animation = &"drawsword"
 autoplay = "Idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=650702407]
