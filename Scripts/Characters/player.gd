@@ -5,6 +5,11 @@ var is_attacking = false
 var count = 0
 var sword_drawn = false
 
+func _on_timer_timeout():
+	count = 0
+	is_attacking = false 
+	print("Combo timed out. Next hit will be attack1!")
+
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite.animation == "attack1":
 		is_attacking = false
@@ -13,8 +18,6 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	elif animated_sprite.animation == "attack3":
 		is_attacking = false
 		count = 0
-	elif animated_sprite.animation == "drawsword":
-		sword_drawn = true
 		# The physics loop will automatically handle playing "Idle" or "Run" next frame
 
 func in_air() -> void:
@@ -49,15 +52,17 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("attack") and not is_attacking:
 		is_attacking = true
 		count += 1
-		print(count)
+		print("current combo step: ", count)
 		if count == 1:
 			animated_sprite.play("attack1")
+			$Timer.start()
 		elif count == 2:
 			animated_sprite.play("attack2")
+			$Timer.start()
 		elif count == 3:
 			animated_sprite.play("attack3")
-			
-		
+			$Timer.start()
+
 	# Play animations (only if NOT attacking)
 	if not is_attacking:
 		if is_on_floor():
@@ -67,9 +72,7 @@ func _physics_process(delta: float) -> void:
 				animated_sprite.play("Run")
 		else:
 			in_air()
-			
-	if Input.is_action_just_pressed("draw_sword"):
-		sword_drawn = true
-		animated_sprite.play("drawsword")
 		
 	move_and_slide()
+	
+	
