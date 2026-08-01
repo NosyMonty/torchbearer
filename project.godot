@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="The torchbearer"
-run/main_scene="uid://d16vt1fi70222"
+run/main_scene="uid://cna138ssldk7s"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

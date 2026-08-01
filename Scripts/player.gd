@@ -1,6 +1,6 @@
 extends CharacterBody2D
 const SPEED = 130.0
-const JUMP_VELOCITY = -500.0
+const JUMP_VELOCITY = -350.0
 var is_attacking = false
 var count = 0
 var sword_drawn = false

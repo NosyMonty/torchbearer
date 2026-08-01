@@ -1,30 +1,6 @@
 [gd_scene format=3 uid="uid://d16vt1fi70222"]
 
-[ext_resource type="PackedScene" uid="uid://c67wb0haj88ju" path="res://Scenes/player.tscn" id="1_jmr45"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jmr45"]
-size = Vector2(153, 20)
-
 [node name="Tutorial_level" type="Node2D" unique_id=221264399]
-
-[node name="Player" parent="." unique_id=2087622451 instance=ExtResource("1_jmr45")]
-position = Vector2(-1, -19)
-
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=2066705434]
-position = Vector2(0, -17)
-zoom = Vector2(5, 5)
-
-[node name="Timer" type="Timer" parent="Player" unique_id=446058372]
-wait_time = 0.8
-one_shot = true
 
 [node name="TileMap" type="TileMap" parent="." unique_id=1696440704]
 format = 2
-
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1300242415]
-position = Vector2(1.5, 21)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1578115373]
-shape = SubResource("RectangleShape2D_jmr45")
-
-[connection signal="timeout" from="Player/Timer" to="Player" method="_on_timer_timeout"]

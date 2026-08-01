@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c67wb0haj88ju"]
 
-[ext_resource type="Script" uid="uid://cwdcn4j63rc7s" path="res://Scripts/Characters/player.gd" id="1_cvnsp"]
+[ext_resource type="Script" uid="uid://cwdcn4j63rc7s" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://ligowxkl3b81" path="res://Assest/Characters/Player/adventurer-v1.5-Sheet.png" id="1_v0iea"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cvnsp"]
@@ -343,4 +343,12 @@ autoplay = "Idle"
 position = Vector2(-3, 6.5)
 shape = SubResource("RectangleShape2D_cvnsp")
 
+[node name="Timer" type="Timer" parent="." unique_id=66275887]
+wait_time = 0.8
+one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=459579056]
+zoom = Vector2(4, 4)
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
