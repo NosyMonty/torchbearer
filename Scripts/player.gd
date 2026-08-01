@@ -4,6 +4,7 @@ const JUMP_VELOCITY = -350.0
 var is_attacking = false
 var count = 0
 var sword_drawn = false
+var health = 100
 
 func _on_timer_timeout():
 	count = 0

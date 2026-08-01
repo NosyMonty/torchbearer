@@ -107,6 +107,34 @@ region = Rect2(50, 296, 50, 37)
 atlas = ExtResource("1_v0iea")
 region = Rect2(100, 296, 50, 37)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph33w"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(250, 296, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ldla"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(300, 296, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7t2e"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(0, 333, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nmr2m"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(50, 333, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax3m3"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(100, 333, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vlem"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(150, 333, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8eeqe"]
+atlas = ExtResource("1_v0iea")
+region = Rect2(200, 333, 50, 37)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_fs7ks"]
 atlas = ExtResource("1_v0iea")
 region = Rect2(100, 407, 50, 37)
@@ -180,7 +208,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"Idle",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -270,6 +298,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ph33w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ldla")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7t2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nmr2m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ax3m3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vlem")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8eeqe")
+}],
+"loop": false,
+"name": &"die",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_fs7ks")
 }, {
 "duration": 1.0,
@@ -327,7 +381,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
-size = Vector2(20, 35)
+size = Vector2(26, 39)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6t5aa"]
+size = Vector2(14, 30)
 
 [node name="Player" type="CharacterBody2D" unique_id=2087622451]
 script = ExtResource("1_cvnsp")
@@ -336,10 +393,13 @@ script = ExtResource("1_cvnsp")
 position = Vector2(-1.5, 3.25)
 scale = Vector2(1.06, 1.1756756)
 sprite_frames = SubResource("SpriteFrames_wpjfl")
-animation = &"Idle"
+animation = &"die"
 autoplay = "Idle"
+frame = 6
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1081287791]
+visible = false
 position = Vector2(-3, 6.5)
 shape = SubResource("RectangleShape2D_cvnsp")
 
@@ -349,6 +409,18 @@ one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=459579056]
 zoom = Vector2(4, 4)
+
+[node name="HurtBox" type="Area2D" parent="." unique_id=1121552171]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=417949525]
+position = Vector2(-2, 4.5)
+shape = SubResource("RectangleShape2D_cvnsp")
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=1395259230]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1212701387]
+position = Vector2(19, 2)
+shape = SubResource("RectangleShape2D_6t5aa")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
