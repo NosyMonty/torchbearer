@@ -3,7 +3,6 @@ extends CharacterBody2D
 # THE CORE IDEA: ONE STATE VARIABLE
 enum State { SLEEP, WAKE, CHASE, ATTACK, HURT, DEAD, IDLEFLY }
 var current_state: State = State.SLEEP
-
 var speed: float = 80.0
 var health: int = 3
 var damage_amount: int = 1
@@ -13,6 +12,24 @@ var player: CharacterBody2D = null
 @onready var detection_area = $DetectionArea
 @onready var attack_area = $AttackArea
 @onready var hurt_area = $HurtArea
+@onready var attack_cooldown = $AttackCooldown
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	match current_state:
+		State.WAKE:
+			change_state(State.CHASE)
+		State.ATTACK:
+			attack_cooldown.start()
+		State.HURT:
+			change_state(State.CHASE)
+		State.DEAD:
+			queue_free()
+
+func _on_attack_cooldown_timeout() -> void:
+	if player != null and attack_area.overlaps_body(player):
+		change_state(State.ATTACK)
+	else:
+		change_state(State.CHASE)
 
 func _on_animated_sprite_2d_frame_changed() -> void:
 	if current_state == State.ATTACK:
@@ -28,6 +45,10 @@ func _physics_process(_delta: float) -> void:
 	if current_state == State.CHASE and player != null:
 		var direction = (player.global_position - global_position).normalized()
 		velocity = direction * speed
+		if direction.x  != 0:
+			anim.flip_h = direction.x < 0 
+		elif direction.x != 0:
+			anim.flip_h = direction.x > 0
 		move_and_slide()
 
 		# Flip the sprite to face the player
@@ -80,20 +101,6 @@ func _on_attack_area_body_entered(body: Node2D) -> void:
 	if body == player and current_state == State.CHASE:
 		change_state(State.ATTACK)
 
-func _on_animated_sprite_2d_animation_finished() -> void:
-	# Purely animation-driven transitions
-	match current_state:
-		State.WAKE:
-			change_state(State.CHASE)
-		State.ATTACK:
-			# Cooldown spacing: naturally created by returning to chase.
-			change_state(State.CHASE) 
-		State.HURT:
-			change_state(State.CHASE)
-		State.DEAD:
-			queue_free() # Deletes the node permanently
-
-# MIRRORED DAMAGE SYSTEM
 
 # 1. Bat takes damage (Call this when player's attack hits the Bat's HurtBox)
 func take_damage(amount: int) -> void:

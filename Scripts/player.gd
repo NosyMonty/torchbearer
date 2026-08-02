@@ -7,7 +7,7 @@ var sword_drawn = false
 var max_health: int = 5
 var health: int = max_health
 
-@onready var attack_hitbox = $AttackHitbox
+@onready var attack_hitbox = $AttackArea
 
 func deal_damage() -> void:
 	var bodies = attack_hitbox.get_overlapping_bodies()
@@ -31,7 +31,7 @@ func take_damage(amount: int) -> void:
 		die()
 
 func die() -> void:
-	# Placeholder for now — later this should trigger respawn at last checkpoint
+	animated_sprite.play("die")
 	print("Player died")
 
 func _on_timer_timeout():
@@ -103,9 +103,3 @@ func _physics_process(delta: float) -> void:
 			in_air()
 		
 	move_and_slide()
-	
-	
-
-
-func _on_animated_sprite_2d_frame_changed() -> void:
-	pass # Replace with function body.

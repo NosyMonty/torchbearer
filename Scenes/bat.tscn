@@ -596,6 +596,9 @@ shape = SubResource("CircleShape2D_f58ts")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea" unique_id=206773727]
 shape = SubResource("CircleShape2D_nkvpi")
 
+[node name="AttackCooldown" type="Timer" parent="." unique_id=2025254202]
+one_shot = true
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
