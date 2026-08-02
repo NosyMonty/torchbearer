@@ -4,7 +4,35 @@ const JUMP_VELOCITY = -350.0
 var is_attacking = false
 var count = 0
 var sword_drawn = false
-var health = 100
+var max_health: int = 5
+var health: int = max_health
+
+@onready var attack_hitbox = $AttackHitbox
+
+func deal_damage() -> void:
+	var bodies = attack_hitbox.get_overlapping_bodies()
+	for body in bodies:
+		if body.has_method("take_damage"):
+			body.take_damage(1)
+			
+func _on_anmiated_sprite_2d_frame_changed() -> void:
+	if animated_sprite.animation in ["attack1", "attack2", "attack3"]:
+		if animated_sprite.frame == 2:
+			attack_hitbox.get_node("CollisionShape2D").disabled = false
+		else:
+			attack_hitbox.get_node("CollisionShape2D").disabled = true
+
+func take_damage(amount: int) -> void:
+	if is_attacking: # optional: prevents damage feeling unfair mid-combo, adjust as you like
+		pass
+	health -= amount
+	print("Player health: ", health)
+	if health <= 0:
+		die()
+
+func die() -> void:
+	# Placeholder for now — later this should trigger respawn at last checkpoint
+	print("Player died")
 
 func _on_timer_timeout():
 	count = 0
@@ -77,3 +105,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 	
+
+
+func _on_animated_sprite_2d_frame_changed() -> void:
+	pass # Replace with function body.
