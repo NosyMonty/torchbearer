@@ -6,8 +6,11 @@ var count = 0
 var sword_drawn = false
 var max_health: int = 5
 var health: int = max_health
+var is_hurt = false
 
 @onready var attack_hitbox = $AttackArea
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+
 
 func deal_damage() -> void:
 	var bodies = attack_hitbox.get_overlapping_bodies()
@@ -15,29 +18,27 @@ func deal_damage() -> void:
 		if body.has_method("take_damage"):
 			body.take_damage(1)
 			
-func _on_anmiated_sprite_2d_frame_changed() -> void:
+func _on_animated_sprite_2d_frame_changed() -> void:
 	if animated_sprite.animation in ["attack1", "attack2", "attack3"]:
 		if animated_sprite.frame == 2:
 			attack_hitbox.get_node("CollisionShape2D").disabled = false
+			deal_damage()
 		else:
 			attack_hitbox.get_node("CollisionShape2D").disabled = true
 
 func take_damage(amount: int) -> void:
-	if is_attacking: # optional: prevents damage feeling unfair mid-combo, adjust as you like
-		pass
+	if is_hurt:
+		return
 	health -= amount
-	print("Player health: ", health)
+	print("Player health:", health)
 	if health <= 0:
-		die()
-
-func die() -> void:
-	animated_sprite.play("die")
-	print("Player died")
-
-func _on_timer_timeout():
-	count = 0
-	is_attacking = false 
-	print("Combo timed out. Next hit will be attack1!")
+		is_attacking = false 
+		is_hurt = true 
+		animated_sprite.play("die")
+	else:
+		is_attacking = false 
+		is_hurt = true
+		animated_sprite.play("hurt")
 
 func _on_animated_sprite_2d_animation_finished() -> void:
 	if animated_sprite.animation == "attack1":
@@ -45,9 +46,18 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 	elif animated_sprite.animation == "attack2":
 		is_attacking = false
 	elif animated_sprite.animation == "attack3":
-		is_attacking = false
+		is_attacking = false 
 		count = 0
-		# The physics loop will automatically handle playing "Idle" or "Run" next frame
+	elif animated_sprite.animation == "hurt":
+		is_hurt = false 
+	elif animated_sprite.animation == "die":
+		get_tree().reload_current_scene()
+
+func _on_timer_timeout():
+	count = 0
+	is_attacking = false 
+	print("Combo timed out. Next hit will be attack1!")
+
 
 func in_air() -> void:
 	if velocity.y < 0:
@@ -55,7 +65,6 @@ func in_air() -> void:
 	elif velocity.y > 0:
 		animated_sprite.play("fall")
 
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -78,7 +87,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		
 	# Handle attack input
-	if Input.is_action_just_pressed("attack") and not is_attacking:
+	if Input.is_action_just_pressed("attack") and not is_attacking and not is_hurt:
 		is_attacking = true
 		count += 1
 		print("current combo step: ", count)
@@ -93,7 +102,7 @@ func _physics_process(delta: float) -> void:
 			$Timer.start()
 
 	# Play animations (only if NOT attacking)
-	if not is_attacking:
+	if not is_attacking and not is_hurt:
 		if is_on_floor():
 			if direction == 0:
 				animated_sprite.play("Idle")

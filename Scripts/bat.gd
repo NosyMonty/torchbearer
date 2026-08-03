@@ -19,6 +19,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		State.WAKE:
 			change_state(State.CHASE)
 		State.ATTACK:
+			change_state(State.CHASE)
 			attack_cooldown.start()
 		State.HURT:
 			change_state(State.CHASE)
