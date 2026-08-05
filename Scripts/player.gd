@@ -17,6 +17,7 @@ func deal_damage() -> void:
 	for body in bodies:
 		if body.has_method("take_damage"):
 			body.take_damage(1)
+			print("damage delt")
 			
 func _on_animated_sprite_2d_frame_changed() -> void:
 	if animated_sprite.animation in ["attack1", "attack2", "attack3"]:
