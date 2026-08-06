@@ -3,7 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://ce1fx13cna7o8" path="res://Assest/Tilesets/Cave Tileset/Gray_Tile_Terrain (16 x 16).png" id="1_02alt"]
 [ext_resource type="PackedScene" uid="uid://c67wb0haj88ju" path="res://Scenes/player.tscn" id="2_3usej"]
 [ext_resource type="Texture2D" uid="uid://cfvv51mpywnwt" path="res://Assest/Tilesets/Cave Tileset/Scaffolding_and_BG_Parts (16 x 16).png" id="2_yfbkh"]
+[ext_resource type="PackedScene" uid="uid://dqaan1ncnoo5s" path="res://Scenes/bat.tscn" id="3_3usej"]
 [ext_resource type="PackedScene" uid="uid://bmnigaxevtflq" path="res://Scenes/kill_zone.tscn" id="4_yfbkh"]
+[ext_resource type="PackedScene" uid="uid://ocvgaqn6odbq" path="res://Scenes/spikes.tscn" id="5_g4geh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yfbkh"]
 texture = ExtResource("1_02alt")
@@ -414,3 +416,9 @@ position = Vector2(339.0857, 437.22873)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone" unique_id=1896909816]
 shape = SubResource("WorldBoundaryShape2D_g4geh")
+
+[node name="Spikes" parent="KillZone" unique_id=1915685801 groups=["player"] instance=ExtResource("5_g4geh")]
+position = Vector2(-82.08569, -445.22873)
+
+[node name="CharacterBody2D" parent="KillZone" unique_id=535652632 instance=ExtResource("3_3usej")]
+position = Vector2(-132.0857, -477.22873)

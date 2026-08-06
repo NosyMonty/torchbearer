@@ -25,6 +25,6 @@ sprite_frames = SubResource("SpriteFrames_0qgod")
 
 [node name="KillZone" parent="." unique_id=2132538118 instance=ExtResource("2_gwqs2")]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KillZone" unique_id=364438122]
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="KillZone" unique_id=364438122 groups=["player"]]
 position = Vector2(0, 8)
 polygon = PackedVector2Array(0, 0, 8, 0, 8, -1, 7, -1, 7, -3, 6, -3, 6, -5, 5, -5, 5, -7, 4, -7, 4, -8, 3, -8, 3, -10, 2, -10, 2, -12, 1, -12, 1, -13, -1, -13, -1, -12, -2, -12, -2, -10, -3, -10, -3, -8, -4, -8, -4, -7, -5, -7, -5, -5, -6, -5, -6, -3, -7, -3, -7, -1, -8, -1, -8, 0)
