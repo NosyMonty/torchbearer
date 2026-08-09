@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://c2s3h868t4ywu"]
+
+[ext_resource type="Script" uid="uid://07rjkrv7g1ou" path="res://Scripts/game_over.gd" id="1_k52d1"]
+[ext_resource type="FontFile" uid="uid://kds6spn62d6b" path="res://Assest/Fonts/DungeonFont.ttf" id="1_m5628"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k52d1"]
+font = ExtResource("1_m5628")
+font_size = 76
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ktc4i"]
+bg_color = Color(0.14117648, 0.14509805, 0.15686275, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.07058824, 0.07450981, 0.08235294, 1)
+border_blend = true
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_size = 3
+shadow_offset = Vector2(2, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uib17"]
+bg_color = Color(0.08627451, 0.09019608, 0.09803922, 1)
+border_color = Color(0.039215688, 0.039215688, 0.043137256, 1)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rdiyk"]
+bg_color = Color(0.1764706, 0.1882353, 0.20784314, 1)
+border_color = Color(0.7490196, 0.56078434, 0.1882353, 1)
+border_blend = true
+
+[node name="GameOver" type="CanvasLayer" unique_id=1659985332]
+script = ExtResource("1_k52d1")
+
+[node name="Control" type="Control" parent="." unique_id=608329319]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control" unique_id=1803680871]
+layout_mode = 0
+offset_right = 1150.0
+offset_bottom = 619.0
+text = "You Died"
+label_settings = SubResource("LabelSettings_k52d1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Control" unique_id=866610339]
+layout_mode = 0
+offset_left = 444.0
+offset_top = 389.0
+offset_right = 757.0
+offset_bottom = 440.0
+theme_override_colors/font_color = Color(0.7490196, 0.56078434, 0.1882353, 1)
+theme_override_colors/font_pressed_color = Color(0.5411765, 0.50980395, 0.45882353, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/icon_normal_color = Color(0.14117648, 0.14509805, 0.15686275, 1)
+theme_override_colors/icon_focus_color = Color(0.07058824, 0.07450981, 0.08235294, 1)
+theme_override_fonts/font = ExtResource("1_m5628")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = SubResource("StyleBoxFlat_ktc4i")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_uib17")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rdiyk")
+text = "Restart"
+
+[connection signal="pressed" from="Control/Button" to="." method="_on_restart_button_pressed"]

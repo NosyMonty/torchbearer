@@ -18,7 +18,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Spikes" type="Node2D" unique_id=1915685801]
+[node name="Spike" type="Node2D" unique_id=1915685801]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2093328135]
 sprite_frames = SubResource("SpriteFrames_0qgod")

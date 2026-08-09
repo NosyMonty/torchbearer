@@ -10,6 +10,7 @@ var is_sliding = false
 var max_health: int = 5
 var health: int = max_health
 var is_hurt = false
+var is_dead = false
 @onready var attack_hitbox = $AttackArea
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -30,11 +31,11 @@ func _on_attack_area_body_entered(body: Node2D) -> void:
 func _on_animated_sprite_2d_frame_changed() -> void:
 	if animated_sprite.animation in ["attack1", "attack2", "attack3"]:
 		if animated_sprite.frame == 2:
-			attack_hitbox.get_node("CollisionShape2D").disabled = false
+			attack_hitbox.get_node("CollisionShape2D").set_deferred("disabled", false)
 		else:
-			attack_hitbox.get_node("CollisionShape2D").disabled = true
+			attack_hitbox.get_node("CollisionShape2D").set_deferred("disabled", true)
 	else:
-		attack_hitbox.get_node("CollisionShape2D").disabled = true
+		attack_hitbox.get_node("CollisionShape2D").set_deferred("disabled", true)
 
 # Called by enemies (e.g. the bat) when they successfully hit the player.
 # Reduces health and plays either the hurt or die animation depending on how much health is left.
@@ -46,6 +47,7 @@ func take_damage(amount: int) -> void:
 	if health <= 0:
 		is_attacking = false
 		is_hurt = true
+		is_dead = true
 		animated_sprite.play("die")
 	else:
 		is_attacking = false
@@ -64,7 +66,13 @@ func fade_to_black() -> void:
 	get_tree().root.add_child(canvas)
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "modulate:a", 1.0, 1.0)
-	tween.tween_callback(get_tree().reload_current_scene)
+	tween.tween_callback(func(): show_game_over(canvas))
+
+func show_game_over(fade_canvas: CanvasLayer) -> void:
+	fade_canvas.queue_free()
+	var game_over_scene = preload("res://scenes/GameOver.tscn")
+	var game_over_instance = game_over_scene.instantiate()
+	get_tree().root.add_child(game_over_instance)
 
 # Fires automatically whenever ANY animation on the player finishes playing.
 # Used to reset state variables once their animation is done, so the next
@@ -108,36 +116,37 @@ func in_air() -> void:
 # Runs every physics frame. Handles gravity, jumping, movement, attacking,
 # sword drawing/sheathing, sliding, and choosing which animation should currently play.
 func _physics_process(delta: float) -> void:
-	# Apply gravity while airborne.
+	# Gravity always applies, even when dead — untouched by is_dead.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
-	# Jump only if the jump key was just pressed AND the player is on the ground.
-	# Also cancels a slide early if the player jumps out of it.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	# Jump — blocked while dead.
+	if Input.is_action_just_pressed("jump") and is_on_floor() and not is_dead:
 		velocity.y = JUMP_VELOCITY
 		if is_sliding:
 			is_sliding = false
 
-	# Read left/right input and move accordingly.
 	var direction := Input.get_axis("move_left", "move_right")
-	if direction > 0:
-		animated_sprite.flip_h = false
-	elif direction < 0:
-		animated_sprite.flip_h = true
+	if not is_dead:
+		if direction > 0:
+			animated_sprite.flip_h = false
+		elif direction < 0:
+			animated_sprite.flip_h = true
 
-	# Use the faster slide speed while sliding, otherwise normal run speed,
-	# and decelerate smoothly when there's no input at all.
-	if direction:
-		if is_sliding:
-			velocity.x = direction * SLIDE_SPEED
+	# Horizontal movement — blocked while dead, so velocity.x naturally settles to 0.
+	if not is_dead:
+		if direction:
+			if is_sliding:
+				velocity.x = direction * SLIDE_SPEED
+			else:
+				velocity.x = direction * SPEED
 		else:
-			velocity.x = direction * SPEED
+			velocity.x = move_toward(velocity.x, 0, SPEED)
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
-	# Start a new attack (or continue the combo) only if not already attacking, hurt, or sliding.
-	if Input.is_action_just_pressed("attack") and not is_attacking and not is_hurt and not is_sliding:
+	# Attack — blocked while dead.
+	if Input.is_action_just_pressed("attack") and not is_attacking and not is_hurt and not is_sliding and not is_dead:
 		is_attacking = true
 		count += 1
 		print("current combo step: ", count)
@@ -151,22 +160,21 @@ func _physics_process(delta: float) -> void:
 			animated_sprite.play("attack3")
 			$Timer.start()
 
-	# Toggle drawing/sheathing the sword, only if not already mid-action.
-	if Input.is_action_just_pressed("draw_sword") and not is_toggling_sword and not is_attacking and not is_hurt and not is_sliding:
+	# Sword toggle — blocked while dead.
+	if Input.is_action_just_pressed("draw_sword") and not is_toggling_sword and not is_attacking and not is_hurt and not is_sliding and not is_dead:
 		is_toggling_sword = true
 		if sword_drawn:
 			animated_sprite.play("sheathesword")
 		else:
 			animated_sprite.play("drawsword")
 
-	# Start a slide: only while running (direction != 0), on the ground, and not mid-action.
-	if Input.is_action_just_pressed("slide") and is_on_floor() and direction != 0 and not is_sliding and not is_attacking and not is_hurt and not is_toggling_sword:
+	# Slide — blocked while dead.
+	if Input.is_action_just_pressed("slide") and is_on_floor() and direction != 0 and not is_sliding and not is_attacking and not is_hurt and not is_toggling_sword and not is_dead:
 		is_sliding = true
 		animated_sprite.play("slide")
 
-	# Play the correct movement animation, but only when not attacking, hurt,
-	# toggling the sword, or sliding (sliding has its own animation already playing above).
-	if not is_attacking and not is_hurt and not is_toggling_sword and not is_sliding:
+	# Movement animation — blocked while dead, since "die" is already playing.
+	if not is_attacking and not is_hurt and not is_toggling_sword and not is_sliding and not is_dead:
 		if is_on_floor():
 			if direction == 0:
 				if sword_drawn:
@@ -178,5 +186,4 @@ func _physics_process(delta: float) -> void:
 		else:
 			in_air()
 
-	# Actually apply the calculated velocity and handle collisions.
 	move_and_slide()

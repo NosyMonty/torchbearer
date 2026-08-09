@@ -15,6 +15,10 @@ run/main_scene="uid://cna138ssldk7s"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+SaveManager="*uid://cs3xrgkavy4l8"
+
 [display]
 
 window/size/borderless=true

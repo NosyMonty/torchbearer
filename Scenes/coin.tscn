@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://frmv0j42nfca"]
+
+[ext_resource type="Script" uid="uid://cge28bgwit66f" path="res://Scripts/coin.gd" id="1_tthw5"]
+[ext_resource type="Texture2D" uid="uid://wj1kl3r7fals" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Items/000_0036_coin10.png" id="2_6pu15"]
+[ext_resource type="Texture2D" uid="uid://dsbiwr2531qmy" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Items/000_0037_coin9.png" id="3_vgc30"]
+[ext_resource type="Texture2D" uid="uid://bms4s7tlykn4l" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Items/000_0038_coin8.png" id="4_qtgto"]
+[ext_resource type="Texture2D" uid="uid://dt71h6rx41age" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Items/000_0039_coin7.png" id="5_m55n1"]
+[ext_resource type="Texture2D" uid="uid://cqn5j6c3jpjcu" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Items/000_0040_coin6.png" id="6_wm60r"]
+[ext_resource type="Texture2D" uid="uid://bbta17fjjyeka" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Items/000_0041_coin5.png" id="7_yrv0a"]
+[ext_resource type="Texture2D" uid="uid://dv13ssphddkao" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Items/000_0042_coin4.png" id="8_tsgod"]
+[ext_resource type="Texture2D" uid="uid://cjxvcr450x07s" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Items/000_0043_coin3.png" id="9_oh32v"]
+[ext_resource type="Texture2D" uid="uid://ce2i5ycfefest" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Items/000_0044_coin2.png" id="10_23qhy"]
+[ext_resource type="Texture2D" uid="uid://byyxxmvau84sw" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Items/000_0045_coin.png" id="11_picgf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_75llj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6pu15")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_vgc30")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_qtgto")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_m55n1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_wm60r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_yrv0a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_tsgod")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_oh32v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_23qhy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_picgf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lhdc7"]
+radius = 50.0
+
+[node name="Coin" type="Area2D" unique_id=1661219925]
+script = ExtResource("1_tthw5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=765041688]
+sprite_frames = SubResource("SpriteFrames_75llj")
+frame_progress = 0.53799087
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1696209389]
+shape = SubResource("CircleShape2D_lhdc7")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

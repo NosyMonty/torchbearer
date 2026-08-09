@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dcwdcha52pap8"]
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1258672752]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1251090243]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1843980112]
