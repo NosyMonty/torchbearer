@@ -18,6 +18,32 @@ var save_data := {
 }
 
 
+# --- Level theme lookup ---
+# Maps a keyword that might appear in a scene's file path to a theme key.
+# Covers "vilage" (your current filename typo) as well as the correct
+# spelling, plus "tutorial" since tutorial_level.tscn doesn't literally
+# say "village" but should still count as the village theme.
+const LEVEL_THEME_KEYWORDS := {
+	"cave": "cave",
+	"vilage": "village",
+	"village": "village",
+	"tutorial": "village",
+}
+
+const THEMES := {
+	"cave": preload("res://Themes/cave_theme.tres"),
+	"village": preload("res://Themes/village_theme.tres"),
+}
+
+
+func get_theme_for_level(level_path: String) -> Theme:
+	var path_lower := level_path.to_lower()
+	for keyword in LEVEL_THEME_KEYWORDS.keys():
+		if keyword in path_lower:
+			return THEMES[LEVEL_THEME_KEYWORDS[keyword]]
+	return null
+
+
 func has_save_file() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)
 

@@ -5,6 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://cfvv51mpywnwt" path="res://Assest/Tilesets/Cave Tileset/Scaffolding_and_BG_Parts (16 x 16).png" id="2_yfbkh"]
 [ext_resource type="PackedScene" uid="uid://dqaan1ncnoo5s" path="res://Scenes/bat.tscn" id="3_3usej"]
 [ext_resource type="PackedScene" uid="uid://ocvgaqn6odbq" path="res://Scenes/spikes.tscn" id="5_g4geh"]
+[ext_resource type="PackedScene" uid="uid://frmv0j42nfca" path="res://Scenes/coin.tscn" id="6_mp6fm"]
+[ext_resource type="Texture2D" uid="uid://lx1xujbcihhc" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/bg.png" id="7_i8nqp"]
+[ext_resource type="Texture2D" uid="uid://djxcrhvsp0uj6" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/myst.png" id="8_826tw"]
+[ext_resource type="Texture2D" uid="uid://bqphhhkqwixon" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/rock5.png" id="9_ehcl6"]
+[ext_resource type="Texture2D" uid="uid://cjj2670tw774b" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/rock3.png" id="10_gcsno"]
+[ext_resource type="Texture2D" uid="uid://b1m572qjbejeo" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/rock2.png" id="11_k6l6x"]
+[ext_resource type="Texture2D" uid="uid://c2kpsboq4sl6k" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/rock1.png" id="12_mceht"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yfbkh"]
 texture = ExtResource("1_02alt")
@@ -522,4 +529,52 @@ position = Vector2(1325, 200)
 position = Vector2(1309, 200)
 
 [node name="Bat" parent="." unique_id=535652632 instance=ExtResource("3_3usej")]
-position = Vector2(1158, -14)
+position = Vector2(151, -42)
+
+[node name="Coin" parent="." unique_id=1661219925 instance=ExtResource("6_mp6fm")]
+position = Vector2(266, -23)
+
+[node name="Moving background" type="ParallaxBackground" parent="." unique_id=1144263857]
+scroll_ignore_camera_zoom = true
+
+[node name="Layer1" type="Parallax2D" parent="Moving background" unique_id=664619094]
+scroll_scale = Vector2(0.1, 0.1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Moving background/Layer1" unique_id=1427774801]
+position = Vector2(192, -46)
+texture = ExtResource("7_i8nqp")
+
+[node name="Layer2" type="Parallax2D" parent="Moving background" unique_id=891713748]
+scroll_scale = Vector2(0.2, 0.2)
+
+[node name="Sprite2D" type="Sprite2D" parent="Moving background/Layer2" unique_id=1309512750]
+position = Vector2(199, -53)
+texture = ExtResource("8_826tw")
+
+[node name="Layer3" type="Parallax2D" parent="Moving background" unique_id=1741989344]
+scroll_scale = Vector2(0.3, 0.3)
+
+[node name="Sprite2D" type="Sprite2D" parent="Moving background/Layer3" unique_id=1321425724]
+position = Vector2(192, -47)
+texture = ExtResource("9_ehcl6")
+
+[node name="Layer4" type="Parallax2D" parent="Moving background" unique_id=1242198330]
+scroll_scale = Vector2(0.5, 0.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Moving background/Layer4" unique_id=2006566469]
+position = Vector2(192, -46)
+texture = ExtResource("10_gcsno")
+
+[node name="Layer5" type="Parallax2D" parent="Moving background" unique_id=241280651]
+scroll_scale = Vector2(0.75, 0.75)
+
+[node name="Sprite2D" type="Sprite2D" parent="Moving background/Layer5" unique_id=1195420328]
+position = Vector2(192, -47)
+texture = ExtResource("11_k6l6x")
+
+[node name="Layer6" type="Parallax2D" parent="Moving background" unique_id=1338964004]
+scroll_scale = Vector2(0.9, 0.9)
+
+[node name="Sprite2D" type="Sprite2D" parent="Moving background/Layer6" unique_id=896322525]
+position = Vector2(192, -46)
+texture = ExtResource("12_mceht")

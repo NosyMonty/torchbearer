@@ -9,6 +9,9 @@ func _ready() -> void:
 	# Hide Continue entirely if there's nothing to continue from yet -
 	# this is what SaveManager.has_save_file() was built for.
 	continue_button.visible = SaveManager.has_save_file()
+	var current_theme = SaveManager.get_theme_for_level(SaveManager.save_data.current_level)
+	if current_theme:
+		theme = current_theme
 
 
 func _on_new_game_button_pressed() -> void:

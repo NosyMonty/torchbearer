@@ -72,6 +72,9 @@ func show_game_over(fade_canvas: CanvasLayer) -> void:
 	fade_canvas.queue_free()
 	var game_over_scene = preload("res://scenes/GameOver.tscn")
 	var game_over_instance = game_over_scene.instantiate()
+	var level_path = get_tree().current_scene.scene_file_path
+	var current_theme = SaveManager.get_theme_for_level(level_path)
+	game_over_instance.theme = current_theme
 	get_tree().root.add_child(game_over_instance)
 
 # Fires automatically whenever ANY animation on the player finishes playing.
