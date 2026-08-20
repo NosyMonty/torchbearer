@@ -30,18 +30,47 @@ const LEVEL_THEME_KEYWORDS := {
 	"tutorial": "village",
 }
 
+# These .tres files don't exist yet - create them once you've picked and
+# imported your button art (see the theme-building steps below).
 const THEMES := {
 	"cave": preload("res://Themes/cave_theme.tres"),
 	"village": preload("res://Themes/village_theme.tres"),
 }
 
+const BACKGROUNDS := {
+	"cave": preload("res://Assest/backgrounds/cave_menu_bg.png"),
+	# "village": preload("res://assets/backgrounds/village_menu_bg.png"),
+}
 
-func get_theme_for_level(level_path: String) -> Theme:
+const MUSIC := {
+	"cave": preload("res://Assest/Audio/Music/cave_theme.wav"),
+	"village": preload("res://Assest/Audio/Music/village_theme.wav"),
+}
+
+
+# Shared by get_theme_for_level/get_background_for_level/get_music_for_level
+# so the same keyword-matching logic isn't duplicated three times.
+func get_theme_key_for_level(level_path: String) -> String:
 	var path_lower := level_path.to_lower()
 	for keyword in LEVEL_THEME_KEYWORDS.keys():
 		if keyword in path_lower:
-			return THEMES[LEVEL_THEME_KEYWORDS[keyword]]
-	return null
+			return LEVEL_THEME_KEYWORDS[keyword]
+	return ""
+
+
+func get_theme_for_level(level_path: String) -> Theme:
+	var key := get_theme_key_for_level(level_path)
+	return THEMES.get(key, null)
+
+
+func get_background_for_level(level_path: String) -> Texture2D:
+	var key := get_theme_key_for_level(level_path)
+	return BACKGROUNDS.get(key, null)
+
+
+func get_music_for_level(level_path: String) -> AudioStream:
+	var key := get_theme_key_for_level(level_path)
+	return MUSIC.get(key, null)
 
 
 func has_save_file() -> bool:

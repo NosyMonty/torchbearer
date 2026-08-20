@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://cgu3p6sb3vx0v"]
 
-[ext_resource type="Theme" uid="uid://d1hsifbpxkxum" path="res://Themes/cave_theme.tres" id="1_8saeu"]
 [ext_resource type="Script" uid="uid://bdkf0cdhaw70q" path="res://Scripts/main_menu.gd" id="1_853f1"]
 [ext_resource type="FontFile" uid="uid://kds6spn62d6b" path="res://Assest/Fonts/DungeonFont.ttf" id="2_8saeu"]
 
@@ -8,19 +7,26 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_ghw46"]
 font = ExtResource("2_8saeu")
-font_size = 30
+font_size = 100
 
 [node name="Control" type="Control" unique_id=1552927058]
 layout_mode = 3
 anchor_left = 0.73700005
 anchor_right = 1.0
 anchor_bottom = 0.20500001
-offset_left = -0.024047852
-offset_bottom = 0.1599884
+offset_left = -881.02405
+offset_bottom = 507.15997
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("1_8saeu")
 script = ExtResource("1_853f1")
+
+[node name="Background" type="TextureRect" parent="." unique_id=403783960]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=990809423]
 layout_direction = 4
@@ -40,25 +46,29 @@ alignment = 1
 layout_mode = 2
 text = "The Torchbearer"
 label_settings = SubResource("LabelSettings_ghw46")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="NewGameButton" type="Button" parent="VBoxContainer" unique_id=774479942]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_stretch_ratio = 0.0
-theme_override_fonts/font = ExtResource("2_8saeu")
+theme_override_font_sizes/font_size = 60
 text = "New Game"
 
 [node name="ContinueButton" type="Button" parent="VBoxContainer" unique_id=117087388]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("2_8saeu")
+theme_override_font_sizes/font_size = 60
 text = "Continue"
 
 [node name="QuitButton" type="Button" parent="VBoxContainer" unique_id=393760835]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_fonts/font = ExtResource("2_8saeu")
+theme_override_font_sizes/font_size = 60
 text = "Quit"
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=1793642993]
 
 [connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
