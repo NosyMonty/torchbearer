@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cxtaundg80gv"]
 
 [ext_resource type="Texture2D" uid="uid://dagnpdb72gx4s" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Attack/Bringer-of-Death_Attack_1.png" id="1_u2wk4"]
+[ext_resource type="Script" uid="uid://nxjatirirh1i" path="res://Scripts/bringer_of_death.gd" id="1_vqjta"]
 [ext_resource type="Texture2D" uid="uid://b4l4gw6c8uu6e" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Attack/Bringer-of-Death_Attack_2.png" id="2_vqjta"]
 [ext_resource type="Texture2D" uid="uid://bfgnrveoc761k" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Attack/Bringer-of-Death_Attack_3.png" id="3_elr0a"]
 [ext_resource type="Texture2D" uid="uid://bx002ek1q51oa" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Attack/Bringer-of-Death_Attack_4.png" id="4_p5otk"]
@@ -114,7 +115,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("19_ykvm4")
 }],
-"loop": true,
+"loop": false,
 "name": &"cast",
 "speed": 15.0
 }, {
@@ -149,7 +150,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("29_uu1px")
 }],
-"loop": true,
+"loop": false,
 "name": &"die",
 "speed": 5.0
 }, {
@@ -163,7 +164,7 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("32_r6n1j")
 }],
-"loop": true,
+"loop": false,
 "name": &"hurt",
 "speed": 5.0
 }, {
@@ -229,14 +230,40 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u2wk4"]
 height = 44.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_vqjta"]
+radius = 118.20744
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_elr0a"]
+size = Vector2(44, 68)
+
 [node name="Bringer_of_death" type="CharacterBody2D" unique_id=1803495615]
+script = ExtResource("1_vqjta")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1524260859]
 sprite_frames = SubResource("SpriteFrames_msc41")
-animation = &"walk"
-frame_progress = 0.013976641
+animation = &"cast"
+autoplay = "idle"
+frame = 8
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1272859726]
-visible = false
 position = Vector2(38, 16)
 shape = SubResource("CapsuleShape2D_u2wk4")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1557897341]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=476396170]
+position = Vector2(38, 17)
+shape = SubResource("CircleShape2D_vqjta")
+
+[node name="AttackArea" type="Area2D" parent="." unique_id=1988668407]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" unique_id=1982420911]
+position = Vector2(0, 18)
+shape = SubResource("RectangleShape2D_elr0a")
+
+[node name="AttackCooldown" type="Timer" parent="." unique_id=1908036243]
+
+[connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

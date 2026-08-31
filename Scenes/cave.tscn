@@ -1,17 +1,13 @@
 [gd_scene format=3 uid="uid://cna138ssldk7s"]
 
 [ext_resource type="Texture2D" uid="uid://ce1fx13cna7o8" path="res://Assest/Tilesets/Cave Tileset/Gray_Tile_Terrain (16 x 16).png" id="1_02alt"]
+[ext_resource type="Texture2D" uid="uid://danspeoyf0am1" path="res://Assest/backgrounds/cave_menu_bg.png" id="1_nchf3"]
 [ext_resource type="PackedScene" uid="uid://c67wb0haj88ju" path="res://Scenes/player.tscn" id="2_3usej"]
 [ext_resource type="Texture2D" uid="uid://cfvv51mpywnwt" path="res://Assest/Tilesets/Cave Tileset/Scaffolding_and_BG_Parts (16 x 16).png" id="2_yfbkh"]
 [ext_resource type="PackedScene" uid="uid://dqaan1ncnoo5s" path="res://Scenes/bat.tscn" id="3_3usej"]
 [ext_resource type="PackedScene" uid="uid://ocvgaqn6odbq" path="res://Scenes/spikes.tscn" id="5_g4geh"]
 [ext_resource type="PackedScene" uid="uid://frmv0j42nfca" path="res://Scenes/coin.tscn" id="6_mp6fm"]
-[ext_resource type="Texture2D" uid="uid://lx1xujbcihhc" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/bg.png" id="7_i8nqp"]
-[ext_resource type="Texture2D" uid="uid://djxcrhvsp0uj6" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/myst.png" id="8_826tw"]
-[ext_resource type="Texture2D" uid="uid://bqphhhkqwixon" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/rock5.png" id="9_ehcl6"]
-[ext_resource type="Texture2D" uid="uid://cjj2670tw774b" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/rock3.png" id="10_gcsno"]
-[ext_resource type="Texture2D" uid="uid://b1m572qjbejeo" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/rock2.png" id="11_k6l6x"]
-[ext_resource type="Texture2D" uid="uid://c2kpsboq4sl6k" path="res://Assest/dungeon-platformer-pixel-art-tileset/PNG/Background/Bright/rock1.png" id="12_mceht"]
+[ext_resource type="PackedScene" uid="uid://dcwdcha52pap8" path="res://Scenes/loot_vase.tscn" id="13_826tw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yfbkh"]
 texture = ExtResource("1_02alt")
@@ -407,6 +403,13 @@ sources/1 = SubResource("TileSetAtlasSource_g4geh")
 
 [node name="Cave" type="Node2D" unique_id=787041788]
 
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=875839537]
+repeat_size = Vector2(960, 0)
+
+[node name="CaveMenuBg" type="Sprite2D" parent="Parallax2D" unique_id=590955253]
+position = Vector2(168, -9)
+texture = ExtResource("1_nchf3")
+
 [node name="TileMap" type="TileMap" parent="." unique_id=1781848571]
 tile_set = SubResource("TileSet_g4geh")
 format = 2
@@ -530,6 +533,7 @@ position = Vector2(1309, 200)
 
 [node name="Bat" parent="." unique_id=535652632 instance=ExtResource("3_3usej")]
 position = Vector2(151, -42)
+collision_mask = 2
 
 [node name="Coin" parent="." unique_id=1661219925 instance=ExtResource("6_mp6fm")]
 position = Vector2(266, -23)
@@ -538,64 +542,5 @@ position = Vector2(266, -23)
 
 [node name="Marker2D" type="Marker2D" parent="oringin" unique_id=663575511]
 
-[node name="Background" type="Node" parent="." unique_id=155976137]
-
-[node name="Layer1" type="Parallax2D" parent="Background" unique_id=664619094]
-scale = Vector2(0.35, 0.35)
-scroll_scale = Vector2(0.1, 0.1)
-repeat_size = Vector2(336, 0)
-repeat_times = 5
-
-[node name="Sprite2D" type="Sprite2D" parent="Background/Layer1" unique_id=1427774801]
-z_index = -6
-texture = ExtResource("7_i8nqp")
-
-[node name="Layer2" type="Parallax2D" parent="Background" unique_id=891713748]
-scale = Vector2(0.35, 0.35)
-scroll_scale = Vector2(0.2, 0.2)
-repeat_size = Vector2(336, 0)
-repeat_times = 5
-
-[node name="Sprite2D" type="Sprite2D" parent="Background/Layer2" unique_id=1309512750]
-z_index = -5
-texture = ExtResource("8_826tw")
-
-[node name="Layer3" type="Parallax2D" parent="Background" unique_id=1741989344]
-scale = Vector2(0.35, 0.35)
-scroll_scale = Vector2(0.3, 0.3)
-repeat_size = Vector2(336, 0)
-repeat_times = 5
-
-[node name="Sprite2D" type="Sprite2D" parent="Background/Layer3" unique_id=1321425724]
-z_index = -4
-texture = ExtResource("9_ehcl6")
-
-[node name="Layer4" type="Parallax2D" parent="Background" unique_id=1242198330]
-scale = Vector2(0.35, 0.35)
-scroll_scale = Vector2(0.5, 0.5)
-repeat_size = Vector2(336, 0)
-repeat_times = 5
-
-[node name="Sprite2D" type="Sprite2D" parent="Background/Layer4" unique_id=2006566469]
-z_index = -3
-texture = ExtResource("10_gcsno")
-
-[node name="Layer5" type="Parallax2D" parent="Background" unique_id=241280651]
-scale = Vector2(0.35, 0.35)
-scroll_scale = Vector2(0.75, 0.75)
-repeat_size = Vector2(336, 0)
-repeat_times = 5
-
-[node name="Sprite2D" type="Sprite2D" parent="Background/Layer5" unique_id=1195420328]
-z_index = -2
-texture = ExtResource("11_k6l6x")
-
-[node name="Layer6" type="Parallax2D" parent="Background" unique_id=1338964004]
-scale = Vector2(0.35, 0.35)
-scroll_scale = Vector2(0.9, 0.9)
-repeat_size = Vector2(336, 0)
-repeat_times = 5
-
-[node name="Sprite2D" type="Sprite2D" parent="Background/Layer6" unique_id=896322525]
-z_index = -1
-texture = ExtResource("12_mceht")
+[node name="StaticBody2D" parent="." unique_id=1258672752 instance=ExtResource("13_826tw")]
+position = Vector2(478, -15)

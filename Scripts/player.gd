@@ -15,13 +15,25 @@ var max_health: int = 5
 var health: int = max_health
 var is_hurt = false
 var is_dead = false
+var pre_collision_velocity_y:float = 0.0
 @onready var attack_hitbox = $AttackArea
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var standing_collision: CollisionShape2D = $CollisionShape2D
+@onready var slide_collision: CollisionShape2D = $SlideCollisionShape2D
 
 # Runs once when the player enters the scene.
 # Makes sure the attack hitbox starts OFF so it can't damage anything before an attack happens.
 func _ready() -> void:
 	attack_hitbox.get_node("CollisionShape2D").disabled = true
+	slide_collision.disabled = true
+
+	# If this level matches what's saved AND a checkpoint has actually been
+	# set in it, spawn there instead of wherever the Player node sits by
+	# default in the editor.
+	var current_scene_path = get_tree().current_scene.scene_file_path
+	if SaveManager.save_data.current_level == current_scene_path and SaveManager.save_data.current_checkpoint != "":
+		var pos = SaveManager.save_data.checkpoint_position
+		global_position = Vector2(pos.x, pos.y)
 
 # Fires automatically whenever a physics body touches the AttackArea.
 # Only counts as a hit if the player is actually mid-attack, preventing accidental damage.
@@ -112,7 +124,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 		sword_drawn = false
 		is_toggling_sword = false
 	elif animated_sprite.animation == "slide":
-		is_sliding = false
+		end_slide()
 
 # Fires when the combo timer runs out (player didn't attack again in time).
 # Resets the combo back to the start.
@@ -129,9 +141,24 @@ func in_air() -> void:
 	elif velocity.y > 0:
 		animated_sprite.play("fall")
 
+# Swaps the hitbox back to standing size and clears is_sliding - called from
+# every place a slide can end (animation finishing naturally, or being
+# cancelled early by a jump), so the shape restore never gets missed.
+func end_slide() -> void:
+	is_sliding = false
+	standing_collision.set_deferred("disabled", false)
+	slide_collision.set_deferred("disabled", true)
+
 # Runs every physics frame. Handles gravity, jumping, movement, attacking,
 # sword drawing/sheathing, sliding, and choosing which animation should currently play.
 func _physics_process(delta: float) -> void:
+	# Manual reset - reloading the scene naturally respawns at the last
+	# checkpoint (or the default spawn if none exists) via the check in
+	# _ready() above, so no extra logic is needed here beyond the reload itself.
+	if Input.is_action_just_pressed("reset_checkpoint"):
+		get_tree().reload_current_scene()
+		return
+
 	# True only while airattack1 or airattack2 is actively playing - this is
 	# what makes the player "hang" in place during those two hits.
 	var is_air_attack_frozen := is_attacking and (air_attack_stage == 1 or air_attack_stage == 2)
@@ -169,7 +196,7 @@ func _physics_process(delta: float) -> void:
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
 			if is_sliding:
-				is_sliding = false
+				end_slide()
 		elif can_double_jump:
 			velocity.y = JUMP_VELOCITY
 			can_double_jump = false
@@ -224,14 +251,11 @@ func _physics_process(delta: float) -> void:
 		air_attack_stage += 1
 		if air_attack_stage == 1:
 			animated_sprite.play("airattack1")
-			print("Air Attack Combo Step: 1")
 		elif air_attack_stage == 2:
 			animated_sprite.play("airattack2")
-			print("Air Attack Combo Step: 2")
 		elif air_attack_stage >= 3:
 			air_attack_stage = 3
-			animated_sprite.play("airattack3loop") 
-			print("Air Attack Combo Step: 3")
+			animated_sprite.play("airattack3loop")
 
 	# Sword toggle — blocked while dead.
 	if Input.is_action_just_pressed("draw_sword") and not is_toggling_sword and not is_attacking and not is_hurt and not is_sliding and not is_dead:
@@ -244,6 +268,8 @@ func _physics_process(delta: float) -> void:
 	# Slide — blocked while dead.
 	if Input.is_action_just_pressed("slide") and is_on_floor() and direction != 0 and not is_sliding and not is_attacking and not is_hurt and not is_toggling_sword and not is_dead:
 		is_sliding = true
+		standing_collision.set_deferred("disabled", true)
+		slide_collision.set_deferred("disabled", false)
 		animated_sprite.play("slide")
 
 	# Movement animation — blocked while dead, mid-attack, or mid-double-jump,
@@ -259,5 +285,8 @@ func _physics_process(delta: float) -> void:
 				animated_sprite.play("Run")
 		else:
 			in_air()
-
+			
+	if not is_on_floor():
+		pre_collision_velocity_y = velocity.y
 	move_and_slide()
+	

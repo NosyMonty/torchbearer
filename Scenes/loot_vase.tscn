@@ -1,9 +1,55 @@
 [gd_scene format=3 uid="uid://dcwdcha52pap8"]
 
-[node name="StaticBody2D" type="StaticBody2D" unique_id=1258672752]
+[ext_resource type="Script" uid="uid://bm22c0qbh0o1d" path="res://Scripts/loot_vase.gd" id="1_m7w74"]
+[ext_resource type="Texture2D" uid="uid://dcp72xgpy7r05" path="res://Assest/UI/vase/breakable pots (gray).png" id="2_u1plh"]
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1251090243]
-offset_right = 40.0
-offset_bottom = 40.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_rooie"]
+atlas = ExtResource("2_u1plh")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q8xjl"]
+atlas = ExtResource("2_u1plh")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnxw4"]
+atlas = ExtResource("2_u1plh")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g56nf"]
+atlas = ExtResource("2_u1plh")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hnrpo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rooie")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q8xjl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nnxw4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g56nf")
+}],
+"loop": false,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u1plh"]
+size = Vector2(14, 16)
+
+[node name="StaticBody2D" type="StaticBody2D" unique_id=1258672752]
+script = ExtResource("1_m7w74")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1013643897]
+sprite_frames = SubResource("SpriteFrames_hnrpo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1843980112]
+position = Vector2(0, 7)
+shape = SubResource("RectangleShape2D_u1plh")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

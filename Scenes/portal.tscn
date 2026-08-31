@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://bk1a6k4ayol0"]
+
+[ext_resource type="Script" uid="uid://dhokhddx3nryw" path="res://Scripts/portal.gd" id="1_xr5t8"]
+[ext_resource type="Texture2D" uid="uid://dwr3jrqlujpfq" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_1.png" id="1_yeu1n"]
+[ext_resource type="Texture2D" uid="uid://bklpjjshdm66v" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_2.png" id="2_xr5t8"]
+[ext_resource type="Texture2D" uid="uid://bijkdrmddxg56" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_3.png" id="3_ascvb"]
+[ext_resource type="Texture2D" uid="uid://h504fbk7ujpw" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_4.png" id="4_ome45"]
+[ext_resource type="Texture2D" uid="uid://biykparr2wkkk" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_5.png" id="5_qyqsp"]
+[ext_resource type="Texture2D" uid="uid://k4xltipxpina" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_6.png" id="6_sfwjr"]
+[ext_resource type="Texture2D" uid="uid://8r4ky4qoknyo" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_7.png" id="7_jw348"]
+[ext_resource type="Texture2D" uid="uid://faoev1kmtfly" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_8.png" id="8_ppyyo"]
+[ext_resource type="Texture2D" uid="uid://5wuwjh8e8ays" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_9.png" id="9_bmlu3"]
+[ext_resource type="Texture2D" uid="uid://bmhf5qpngnkuf" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_10.png" id="10_ngofu"]
+[ext_resource type="Texture2D" uid="uid://b6vvm1igu16pa" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_11.png" id="11_pm21w"]
+[ext_resource type="Texture2D" uid="uid://cb1w2b52np4ng" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_12.png" id="12_0qrnv"]
+[ext_resource type="Texture2D" uid="uid://du2i1gmd6kkc8" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_13.png" id="13_n8mi2"]
+[ext_resource type="Texture2D" uid="uid://ch3pkii1a17bm" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_14.png" id="14_k7gwt"]
+[ext_resource type="Texture2D" uid="uid://cln7tr0j1234k" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_15.png" id="15_llr1f"]
+[ext_resource type="Texture2D" uid="uid://4tsoo8jdgi1a" path="res://Assest/Characters/Bosses/Bringer-Of-Death/Individual Sprite/Spell/Bringer-of-Death_Spell_16.png" id="16_woqtq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0exan"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_yeu1n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_xr5t8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ascvb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ome45")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_qyqsp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sfwjr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_jw348")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ppyyo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_bmlu3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ngofu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_pm21w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_0qrnv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_n8mi2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_k7gwt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_llr1f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_woqtq")
+}],
+"loop": false,
+"name": &"spell",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ascvb"]
+size = Vector2(20, 40.5)
+
+[node name="Portal" type="Area2D" unique_id=1537275614]
+script = ExtResource("1_xr5t8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=885949652]
+position = Vector2(-1, 0)
+sprite_frames = SubResource("SpriteFrames_0exan")
+animation = &"spell"
+frame = 8
+frame_progress = 0.21714729
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=335246001]
+position = Vector2(-7, 25.25)
+shape = SubResource("RectangleShape2D_ascvb")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

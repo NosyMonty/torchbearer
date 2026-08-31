@@ -8,6 +8,7 @@
 [sub_resource type="LabelSettings" id="LabelSettings_ghw46"]
 font = ExtResource("2_8saeu")
 font_size = 100
+font_color = Color(0.6082677, 0.19312498, 0, 1)
 
 [node name="Control" type="Control" unique_id=1552927058]
 layout_mode = 3

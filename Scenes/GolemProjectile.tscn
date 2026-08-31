@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://bltbbd8pytb1p"]
+
+[ext_resource type="Script" uid="uid://hx63glvb1opm" path="res://Scripts/golem_projectile.gd" id="1_d1i8q"]
+[ext_resource type="Texture2D" uid="uid://327d6yee0ne7" path="res://Assest/Characters/Bosses/Mecha-stone Golem 0.1/weapon PNG/arm_projectile.png" id="2_il3ti"]
+[ext_resource type="Texture2D" uid="uid://ch46vejcdxaue" path="res://Assest/Characters/Bosses/Mecha-stone Golem 0.1/weapon PNG/arm_projectile_glowing.png" id="3_2t0hy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yqs5s"]
+atlas = ExtResource("2_il3ti")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g326k"]
+atlas = ExtResource("3_2t0hy")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpcr3"]
+atlas = ExtResource("3_2t0hy")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ua502"]
+atlas = ExtResource("3_2t0hy")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxieg"]
+atlas = ExtResource("3_2t0hy")
+region = Rect2(0, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dypyf"]
+atlas = ExtResource("3_2t0hy")
+region = Rect2(100, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7ikn"]
+atlas = ExtResource("3_2t0hy")
+region = Rect2(200, 100, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_px7fo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yqs5s")
+}],
+"loop": true,
+"name": &"arm_projectile",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g326k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpcr3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ua502")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxieg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dypyf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7ikn")
+}],
+"loop": true,
+"name": &"arm_projectile_glowing",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4wgi"]
+size = Vector2(29, 10)
+
+[node name="GolemProjectile" type="Area2D" unique_id=1464224900]
+script = ExtResource("1_d1i8q")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1924326837]
+sprite_frames = SubResource("SpriteFrames_px7fo")
+animation = &"arm_projectile"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=748470427]
+position = Vector2(28, -12)
+shape = SubResource("RectangleShape2D_j4wgi")
+
+[node name="Lifetime" type="Timer" parent="." unique_id=952201806]
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]
